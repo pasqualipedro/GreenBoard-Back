@@ -1,18 +1,28 @@
-//
-// HERE WE ADD THE SCHEMA OF OUR DB DOCUMENT(S) - "SKELETON ON THE OBJECT"
-//
+/**
+ * User schema
+ */
 const { Schema, model } = require(`mongoose`);
 
-const toDoSchema = new Schema(
+const userSchema = new Schema(
     {
-        title: {type: String, required: true},
-        status: {type: Boolean, default: false},
-        dueDate: Date,
-        assignee: String
+        /**ID comes automatically */
+        name: { type: String, required: true },
+        lastname: { type: Boolean, required: true },
+        email:
+        { 
+            type: Date,
+            required: true,
+            trim: true,
+            lowercase: true,
+        },
+        passwordHash: { type: String, required: true },
+        aniversary: { type: String, required: true },
+        profileImg: { type: String, required: false, default: exampleUrl } /** ??------>>>> NOT SURE ABOUT THIS */
+        /**Adicionar lista de categorias "pessoais" */
     },
     {
         timestamps: true,
     }
 );
 
-module.exports = model('ToDo', toDoSchema);
+module.exports = model('User', userSchema);
