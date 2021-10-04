@@ -6,34 +6,24 @@ const { Schema, model } = require(`mongoose`);
 const transactionSchema = new Schema(
     {
         /**ID comes automatically */
-        type: { 
-            type: String, 
-            required: true,
-            enum: [`Income`, `Expenditure`]
-        },
-        amount: {
-            type: Number,
-            required: true,
-            min: [1], /** ?? This represent 0.01 cents as a minimum for transaction, and always a "positive" value as input */
-            validate:
-            { /** ?? not sure */
-                validator: Number.isInteger,
-                message: `{VALUE} is not an integer value`
-            }
-        },
-        description: {
+        startDate: { type: Date, required: true},
+        endDate: { type: Date, required: true},
+        type:
+        {
             type: String,
-            required: false,
-            default: `No description yet :(`,
-            validate:
-            { /** ?? nore sure */
-                validator: String.length <= 30, 
-                message: `Maximum of 30 characters`
-            }
+            required: true,
+            enum: [`Income`,`Expenditure`]
         },
-        categorization: Date,
-        user: String,
-        transDate: Date
+        description: { type: String, required: true },
+        transCat: { type: Schema.Types.ObjectId, ref: `UserCat` ,required: true }, /**??NOT SURE ABOUT THIS */
+        value: { type: Number, required: true, min: [1] },
+        frequency:
+        {
+            type: String,
+            required: true,
+            enum: [`Single Time`,`Installment`,`Daily`,`Weekly`,`Monthly`,`Year`,`Weekdays`,`Weekends`,`By 2 Months`,`By 3 Months`,`By 4 Months`,`By 6 Months`] 
+        },
+        userID: { type: Schema.Types.ObjectId, ref: `User`, required: true }
     },
     {
         timestamps: true,
