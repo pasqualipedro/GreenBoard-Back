@@ -7,18 +7,11 @@ const userSchema = new Schema(
     {
         /**ID comes automatically */
         name: { type: String, required: true },
-        lastname: { type: Boolean, required: true },
-        email:
-        { 
-            type: Date,
-            required: true,
-            trim: true,
-            lowercase: true,
-        },
+        lastname: { type: String, required: true },
+        age: { type: Number, required: true },
+        email: { type: String, required: true, unique: true },
         passwordHash: { type: String, required: true },
-        aniversary: { type: String, required: true },
         profileImg: { type: String, required: false, default: exampleUrl } /** ??------>>>> NOT SURE ABOUT THIS */
-        /**Adicionar lista de categorias "pessoais" */
     },
     {
         timestamps: true,
