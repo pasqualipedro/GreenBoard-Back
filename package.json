@@ -1,7 +1,12 @@
 {
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cloudinary": "^1.27.0",
     "express": "^4.17.1",
-    "mongoose": "^6.0.8"
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.8",
+    "multer": "^1.4.3",
+    "multer-cloudinary": "^1.1.0"
   },
   "scripts": {
     "test": "nodemon app.js",
