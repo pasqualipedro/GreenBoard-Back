@@ -6,10 +6,10 @@ const { Schema, model } = require(`mongoose`);
 const categoriesUser = new Schema(
     {
         /**ID comes automatically */
-        name: { type: String, required: true },
+        name: { type: String, required: true, unique: true },
         description: { type: String, required: true },
-        budget: [{ type: Number, required: true }], /**??NOT SURE ABOUT THIS */
-        log: [{ type: Date, required: true }], /**??NOT SURE ABOUT THIS */
+        budget: [ { value: Number, date: Number } ],
+        type: { type: Boolean, default: true },
         userID: { type: Schema.Types.ObjectId, ref: `User`, required: true }
         },
     {

@@ -15,7 +15,8 @@ const transactionSchema = new Schema(
             enum: [`Income`,`Expenditure`]
         },
         description: { type: String, required: true },
-        transCat: { type: Schema.Types.ObjectId, ref: `UserCat` ,required: true }, /**??NOT SURE ABOUT THIS */
+        cat_id: { type: Schema.Types.ObjectId, ref: `UserCat` ,required: true },
+        cat_name: { type: Schema.Types.ObjectId, ref: `UserCat`},
         value: { type: Number, required: true, min: [1] },
         frequency:
         {
