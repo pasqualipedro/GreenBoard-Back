@@ -11,7 +11,7 @@ const userSchema = new Schema(
         age: { type: Number, required: true },
         email: { type: String, required: true, unique: true },
         passwordHash: { type: String, required: true },
-        profileImg: { type: String, required: false, default: exampleUrl } /** ??------>>>> NOT SURE ABOUT THIS */
+        profileImg: { type: String, required: false /* default: exampleUrl */ } /** ??------>>>> NOT SURE ABOUT THIS - HOW TO MAKE A DEFAULT IMG?? */
     },
     {
         timestamps: true,
