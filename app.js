@@ -8,6 +8,7 @@ const User = require(`./models/User`);
 const UserCat = require(`./models/UserCategories`);
 /* const DefaultCat = require(`./models/DefaultCategories`); */
 const Transaction = require(`./models/Transaction`);
+const authRouter = require('./routes/auth.routes')
 
 
 const PORT = 5000;
