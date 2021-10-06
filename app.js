@@ -8,7 +8,8 @@ const User = require(`./models/User`);
 const UserCat = require(`./models/UserCategories`);
 /* const DefaultCat = require(`./models/DefaultCategories`); */
 const Transaction = require(`./models/Transaction`);
-const authRouter = require('./routes/auth.routes')
+const authRouter = require('./routes/auth.routes');
+const authMiddleware = require('./Middleware/auth.middleware');
 
 
 const PORT = 5000;
@@ -18,6 +19,8 @@ const app = express();
 /**MIDDLEWARE (pass-through function) */
 app.use(express.json()); /** allows json inside req.body */
 
+app.use('/',authRouter)
+app.use(authMiddleware)
 
 /**REQUESTS - USERS */
 /**Create new user */
@@ -33,20 +36,6 @@ app.post(`/auth/signup`, async (request, response) => {
         response.status(500).json({ msg: `Server error:`, error });
     }
 });
-
-/**Show default categories */
-/* app.get(`/user/intro`, async (request, response) => {
-    try {
-        const arrDefaultCat = await DefaultCat.schema.path(`name`).enumValues;
-        response.status(201).json({ msg: `Here are the default categories`, arrDefaultCat });
-    } catch (error) {
-        response.status(500).json({ msg: `Server error:`, error });
-    }
-}); */
-
-
-/* const payload = DefaultCat.schema.path(`name`).enumValues[0]; */ /** ?? Not sure about this */
-
 
 
 app.listen( PORT, () => console.log(`Server listen on Port ${PORT}`));
