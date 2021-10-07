@@ -23,16 +23,10 @@ app.use(cors());
 
 
 /**ROUTES */
-
-app.use('/',authRouter)
-
-
-app.use(authMiddleware)
-
-
+app.use('/',authRouter);
+app.use(authMiddleware);
 app.use(`/`, userRoutes);
 app.use(`/`, categoryRoutes);
-
 
 app.listen( PORT, () => console.log(`Server listen on Port ${PORT}`));
 

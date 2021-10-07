@@ -9,7 +9,10 @@ const auth = (request, response, next) => {
     const tokenWithoutBearer = token.split(' ')[1];
 
     try {
-        const decodedToken = jwt.verify( tokenWithoutBearer , process.env.SECRET_JWT );
+        const decodedToken = jwt.verify(
+            tokenWithoutBearer,
+            process.env.SECRET_JWT
+        );
         console.log(decodedToken);
         request.user = {...decodedToken};
         next();
