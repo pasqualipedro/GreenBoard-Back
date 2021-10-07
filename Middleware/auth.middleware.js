@@ -11,7 +11,7 @@ const auth = (request, response, next) => {
     try {
         const decodedToken = jwt.verify(
             tokenWithoutBearer,
-            process.env,SECRET_JWT
+            process.env.SECRET_JWT
         );
         console.log(decodedToken);
         request.user = {...decodedToken};
