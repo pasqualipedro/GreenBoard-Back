@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const router = Router()
 
-router.post('/auth/signup', async (request,responde) => {
+router.post('/auth/signup', async (request, response) => {
     const {name, lastName, age, email, password} = request.body;
     try {
         const user= await User.findOne({name});
@@ -52,9 +52,9 @@ router.get('/auth/login', async (request,response) =>{
             process.env.SECRET_JWT,
             {expiresIn: '1day'},
         )
-        response.status(200).json({payload})
+        response.status(200).json({ ...payload, token });
     } catch (error) {
-        response.status(400).json({msg:error.message})
+        response.status(400).json({ msg:error.message });
     }
 })
 

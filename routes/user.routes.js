@@ -3,7 +3,7 @@ const { Router } =  require(`express`);
 const router = Router();
 
 /** importing models */
-const User = require(`./models/User`);
+const User = require(`../models/User`);
 
 /**REQUESTS */
 /**Create new user */

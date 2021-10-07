@@ -23,8 +23,13 @@ app.use(cors());
 
 
 /**ROUTES */
+/**authorization router */
 app.use('/',authRouter);
+
+/**authorization middleware */
 app.use(authMiddleware);
+
+/**private routes */
 app.use(`/`, userRoutes);
 app.use(`/`, categoryRoutes);
 

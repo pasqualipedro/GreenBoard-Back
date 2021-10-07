@@ -3,7 +3,7 @@ const { Router } =  require(`express`);
 const router = Router();
 
 /** importing models */
-const UserCat = require(`./models/UserCategories`);
+const UserCat = require(`../models/UserCategories`);
 
 /**REQUESTS */
 /**Create new category for user */
