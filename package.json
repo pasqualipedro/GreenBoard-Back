@@ -8,6 +8,7 @@
     "json-web-token": "^3.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.8",
+    "morgan": "^1.10.0",
     "multer-cloudinary": "^1.1.0"
   },
   "scripts": {

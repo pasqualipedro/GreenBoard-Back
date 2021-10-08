@@ -3,6 +3,7 @@
  */
 const express = require(`express`);
 require(`./config/db.config`);
+const morgan = require('morgan')
 
 /**Importing routes */
 const authRouter = require('./routes/auth.routes');
@@ -15,6 +16,7 @@ const authMiddleware = require('./Middleware/auth.middleware');
 const PORT = 5000;
 const cors = require(`cors`);
 const app = express();
+app.use(morgan('dev'));
 
 
 /**MIDDLEWARES (pass-through function) */

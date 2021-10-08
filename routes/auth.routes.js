@@ -30,11 +30,12 @@ router.post('/auth/signup', async (request, response) => {
     }
 });
 
-router.get('/auth/login', async (request,response) =>{
+router.post('/auth/login', async (request,response) =>{
     const {email, password} = request.body;
+    console.log(request.body)
     try {
         const user = await User.findOne({email});
-        if(user){
+        if(!user){
             throw new Error ('email not found'); 
         }
         const compareHash = bcrypt.compareSync(password, user.passwordHash);
