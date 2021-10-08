@@ -1,6 +1,7 @@
 /**
  * Start SERVER + DB connection
  */
+require('dotenv').config()
 const express = require(`express`);
 require(`./config/db.config`);
 const morgan = require('morgan')

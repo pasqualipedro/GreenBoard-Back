@@ -62,7 +62,8 @@ router.post('/auth/login', async (request,response) =>{
         )
         response.status(200).json({ ...payload, token });
     } catch (error) {
-        response.status(400).json({ msg:error.message });
+        response.status(400).json({msg: error.message});
+        console.log(error);
     }
 })
 
