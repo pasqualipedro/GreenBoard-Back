@@ -6,27 +6,34 @@ const jwt = require('jsonwebtoken');
 const router = Router()
 
 router.post('/auth/signup', async (request, response) => {
-    const {name, lastName, age, email, password} = request.body;
+    const {name, lastname, age, email, password} = request.body;
+    console.log(request.body);
     try {
-        const user= await User.findOne({name});
+        const user= await User.findOne({name}); 
         if(user){
             throw new Error('User already exists')
         }
-        const salt = await bcrypt.genSaltSync(10);
+        const salt = await bcrypt.genSalt(10);
         const passwordHash = await bcrypt.hash(password, salt);
+
         const newUser = await User.create({
             name,
-            lastName,
+            lastname,
             age,
             email,
             passwordHash
         });
-
+        console.log(newUser)
         response.status(201).json({
-            msg:`${newUser.name} criado com sucesso`
+            msg:`${newUser.name} criado com sucesso`,
+            newUser
         })
     } catch (error) {
-        response.status(500).json({msg:'Erro ao criar novo usuário', error: error.messaage});
+        response.status(500).json({
+            msg:'Erro ao criar novo usuário', 
+            error
+        });
+        console.log(error)
     }
 });
 
