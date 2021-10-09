@@ -1,6 +1,8 @@
 /**
  * User schema
  */
+
+const mongoose = require('mongoose')
 const { Schema, model } = require(`mongoose`);
 
 const userSchema = new Schema(
