@@ -1,10 +1,10 @@
 /**
  * Start SERVER + DB connection
  */
-require('dotenv').config()
+require('dotenv').config();
 const express = require(`express`);
 require(`./config/db.config`);
-const morgan = require('morgan')
+const morgan = require('morgan');
 
 /**Importing routes */
 const authRoutes = require('./routes/auth.routes');
