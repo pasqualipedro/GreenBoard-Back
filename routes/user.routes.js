@@ -10,7 +10,7 @@ const User = require(`../models/User`);
 router.post(`/auth/signup`, async (request, response) => {
     const payload = request.body;
     if(!payload) {
-        return response.status(400).json({ msg: `missing user information for signup` });
+        return response.status(400).json({ msg: `missing User information for signup` });
     }
     try {
         const newUser = await User.create(payload);

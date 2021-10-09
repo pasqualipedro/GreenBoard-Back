@@ -7,7 +7,7 @@ require(`./config/db.config`);
 const morgan = require('morgan')
 
 /**Importing routes */
-const authRouter = require('./routes/auth.routes');
+const authRoutes = require('./routes/auth.routes');
 const userRoutes = require(`./routes/user.routes`);
 const categoryRoutes = require(`./routes/category.routes`);
 
@@ -27,14 +27,14 @@ app.use(cors());
 
 /**ROUTES */
 /**authorization router */
-app.use('/',authRouter);
+app.use('/',authRoutes);
+app.use(`/`, categoryRoutes);/**maybe change later to private - JUST TESTING HERE */
 
 /**authorization middleware */
 app.use(authMiddleware);
 
 /**private routes */
 app.use(`/`, userRoutes);
-app.use(`/`, categoryRoutes);
 
 app.listen( PORT, () => console.log(`Server listen on Port ${PORT}`));
 
