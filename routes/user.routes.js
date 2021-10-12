@@ -7,7 +7,9 @@ const User = require(`../models/User`);
 
 /**REQUESTS */
 /**Create new user */
-router.post(`/auth/signup`, async (request, response) => {
+
+
+/* router.post(`/auth/signup`, async (request, response) => {
     const payload = request.body;
     if(!payload) {
         return response.status(400).json({ msg: `missing User information for signup` });
@@ -18,7 +20,7 @@ router.post(`/auth/signup`, async (request, response) => {
     } catch (error) {
         response.status(500).json({ msg: `Server error:`, error });
     }
-});
+}); */
 
 
 module.exports = router;
