@@ -14,7 +14,6 @@ const categoryRoutes = require(`./routes/category.routes`);
 /**Importing middlewares */
 const authMiddleware = require('./Middleware/auth.middleware');
 
-/* const PORT = 5000; */
 const cors = require(`cors`);
 const app = express();
 app.use(morgan('dev'));
@@ -28,13 +27,14 @@ app.use(cors());
 /**ROUTES */
 /**authorization router */
 app.use('/',authRoutes);
-app.use(`/`, categoryRoutes);/**maybe change later to private - JUST TESTING HERE */
 
 /**authorization middleware */
 app.use(authMiddleware);
 
 /**private routes */
 app.use(`/`, userRoutes);
+app.use(`/`, categoryRoutes);/**maybe change later to private - JUST TESTING HERE */
 
 app.listen( process.env.PORT, () => console.log(`Server listen on Port ${process.env.PORT}`));
+
 
