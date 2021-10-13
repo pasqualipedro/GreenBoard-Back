@@ -25,7 +25,7 @@ app.use(cors());
 
 
 /**ROUTES */
-/**authorization router */
+/**authentication router */
 app.use('/',authRoutes);
 
 /**authorization middleware */
