@@ -1,39 +1,16 @@
+/**
+ * LOGIN / SIGNUP Routes
+ */
 const { Router } = require('express');
+const router = Router();
+
 const bcrypt = require('bcryptjs');
-const User = require('../models/User')
 const jwt = require('jsonwebtoken');
 
-const router = Router()
+/** importing models */
+const User = require('../models/User')
 
 /**REQUESTS */
-/**User signUp */
-router.post('/signup', async (request, response) => {
-    const { name, lastname, age, email, password } = request.body;
-    console.log(request.body)
-    try {
-        const user = await User.findOne({ name }); 
-        if(user){
-            throw new Error('User already exists');
-        };
-        const salt = await bcrypt.genSalt(10);
-        const passwordHash = await bcrypt.hash(password, salt);
-        const newUser = await User.create({
-            name,
-            lastname,
-            age,
-            email,
-            passwordHash
-        });
-        response.status(201).json({
-            name: newUser.name,
-            lastname: newUser.lastname,
-            msg: `Usuario criado com sucesso`
-        });
-    } catch (error) {
-        response.status(500).json({ msg:'Erro ao criar novo usuário', error: error.message });
-    }
-});
-
 /**User logIn */
 router.post('/login', async (request,response) =>{
     const { email, password } = request.body;
@@ -65,5 +42,34 @@ router.post('/login', async (request,response) =>{
         console.log(error);
     };
 });
+
+/**User signUp */
+router.post('/signup', async (request, response) => {
+    const { name, lastname, age, email, password } = request.body;
+    console.log(request.body)
+    try {
+        const user = await User.findOne({ name }); 
+        if(user){
+            throw new Error('User already exists');
+        };
+        const salt = await bcrypt.genSalt(10);
+        const passwordHash = await bcrypt.hash(password, salt);
+        const newUser = await User.create({
+            name,
+            lastname,
+            age,
+            email,
+            passwordHash
+        });
+        response.status(201).json({
+            name: newUser.name,
+            lastname: newUser.lastname,
+            msg: `Usuario criado com sucesso`
+        });
+    } catch (error) {
+        response.status(500).json({ msg:'Erro ao criar novo usuário', error: error.message });
+    }
+});
+
 
 module.exports = router

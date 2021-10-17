@@ -8,6 +8,12 @@ const categoriesUser = new Schema(
         /**ID comes automatically */
         name: { type: String, required: true, unique: true },
         description: { type: String, required: true },
+        type:
+        {
+            type: String,
+            required: true,
+            enum: [`Income`,`Expenditure`]
+        },
         budget: { type: Number, required: true }, /** [ { value: Number, date: Number } ] --->> maybe implement after the MVP is done */ 
         inUse: { type: Boolean, default: true },
         userID: { type: Schema.Types.ObjectId, ref: `User`, required: true }

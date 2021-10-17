@@ -1,6 +1,7 @@
-/** Criando um roteador */
-const { Router, request } =  require(`express`);
-const User = require("../models/User");
+/**
+ * CATEGORY Routes
+*/
+const { Router, request } = require(`express`);
 const router = Router();
 
 /** importing models */
@@ -10,18 +11,26 @@ const UserCat = require(`../models/UserCategories`);
 /**Create new category for one specific user */
 router.post(`/category/add/`, async (request, response) => {
     const { id } = request.user;
+    const { name, description, type, budget, /* inUse */ } = request.body;
     const payload = {
-        name: request.body.name,
-        description: request.body.description,
-        budget: request.body.budget,
-        inUse: request.body.inUse,
+        name: name,
+        description: description,
+        type: type,
+        budget: budget,
+        /* inUse: inUse, */
         userID: id
     };
-    if(payload.name == "" || payload.description == "" ) {
+    if(payload.name === "" || payload.description === "" ) {
         return response.status(400).json({ msg: `Missing category name and/or description` });
     };
-    if(payload.budget == 0 ) {
+    if( !(payload.type === "Expenditure" || payload.type === "Income") ) {
+        return response.status(400).json({ msg: `Please select your category type as Expenditure or Income` });
+    };
+    if(payload.budget === 0 ) {
         return response.status(400).json({ msg: `Category budget must be greater than 0` });
+    };
+    if( !(payload.type === "Expenditure" || payload.type === "Income") ) {
+        return response.status(400).json({ msg: `Please select category type as Expenditure or Income` });
     };
     try {
         console.log(payload);
@@ -64,11 +73,17 @@ router.put(`/category/update/:catId`, async (request, response) => {
     const { id } = request.user; 
     const { catId } = request.params;
     const payload = request.body;
-    if(payload.name == "" || payload.description == "" ) {
-        return response.status(400).json({ msg: `Every category must have a name and/or description` });
+    if(payload.name === "" || payload.description === "" ) {
+        return response.status(400).json({ msg: `Missing category name and/or description` });
     };
-    if(payload.budget == 0 ) {
+    if( !(payload.type === "Expenditure" || payload.type === "Income") ) {
+        return response.status(400).json({ msg: `Please select your category type as Expenditure or Income` });
+    };
+    if(payload.budget === 0 ) {
         return response.status(400).json({ msg: `Category budget must be greater than 0` });
+    };
+    if( !(payload.type === "Expenditure" || payload.type === "Income") ) {
+        return response.status(400).json({ msg: `Please select category type as Expenditure or Income` });
     };
     try {
         const getOneCategoryFromUser = await UserCat.findOneAndUpdate({ userID: id, "_id": catId }, payload, { new: true });

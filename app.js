@@ -10,6 +10,7 @@ const morgan = require('morgan');
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require(`./routes/user.routes`);
 const categoryRoutes = require(`./routes/category.routes`);
+const transactionRoutes = require(`./routes/transaction.routes`);
 
 /**Importing middlewares */
 const authMiddleware = require('./Middleware/auth.middleware');
@@ -23,7 +24,6 @@ app.use(morgan('dev'));
 app.use(express.json()); /** allows json inside req.body */
 app.use(cors());
 
-
 /**ROUTES */
 /**authentication router */
 app.use('/',authRoutes);
@@ -33,7 +33,9 @@ app.use(authMiddleware);
 
 /**private routes */
 app.use(`/`, userRoutes);
-app.use(`/`, categoryRoutes);/**maybe change later to private - JUST TESTING HERE */
+app.use(`/`, categoryRoutes);
+app.use(`/`, transactionRoutes);
+
 
 app.listen( process.env.PORT, () => console.log(`Server listen on Port ${process.env.PORT}`));
 
