@@ -6,6 +6,7 @@ const router = Router();
 
 /** importing models */
 const Transaction = require(`../models/Transaction`);
+const User = require("../models/User");
 const UserCat = require(`../models/UserCategories`);
 
 
@@ -35,8 +36,8 @@ router.post(`/transaction/add`, async (request, response) => {
     if( payload.description === "") {
         return response.status(400).json({ msg: `Please add some description to your transaction`});
     };
-    if( !(allCategoriesFromUser.includes(id)) ) {
-        return response.status(400).json({ msg: `The selected category does not belong to this user`})
+    if( !allCategoriesFromUser.some(element => element.userID == id) ) {
+        return response.status(400).json({ msg: `The selected category does not belong to this user`});
     };
     if(payload.value === 0) {
         return response.status(400).json({ msg: `Please add a value to your transaction`});
@@ -51,7 +52,7 @@ router.post(`/transaction/add`, async (request, response) => {
     };
 });
 
-
+/**Delete one transaction for one specific user */
 
 
 
