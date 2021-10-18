@@ -33,7 +33,6 @@ router.post(`/category/add/`, async (request, response) => {
         return response.status(400).json({ msg: `Please select category type as Expenditure or Income` });
     };
     try {
-        console.log(payload);
         const newUserCategory = await UserCat.create(payload);
         response.status(201).json({ msg: `>${newUserCategory.name}< was added to user categories` });
     } catch (error) {
@@ -46,9 +45,7 @@ router.post(`/category/add/`, async (request, response) => {
 router.get(`/category/all`, async (request, response) => {
     const { id } = request.user;
     try {
-        console.log(id)
         const allCategoriesFromUser = await UserCat.find({ userID: id });
-        console.log(allCategoriesFromUser);
         response.status(200).json({ msg: `All categories are:`, allCategoriesFromUser });
     } catch (error) {
         response.status(500).json({ msg: `Not able to retrieve User Categories`, error });
@@ -60,7 +57,7 @@ router.delete(`/category/delete/:catId`, async (request, response) => {
     const { id } = request.user; 
     const { catId } = request.params;
     try {
-        const delUserCategory = await UserCat.findOneAndDelete({ "_id": catId, userID: id });
+        const deleteUserCategory = await UserCat.findOneAndDelete({ "_id": catId, userID: id });
         response.status(200).json({ msg: `>${delUserCategory.name}< was deleted successfuly` });
     } catch (error) {
         response.status(500).json({ msg: `Not able to delete`, error });
@@ -86,9 +83,8 @@ router.put(`/category/update/:catId`, async (request, response) => {
         return response.status(400).json({ msg: `Please select category type as Expenditure or Income` });
     };
     try {
-        const getOneCategoryFromUser = await UserCat.findOneAndUpdate({ userID: id, "_id": catId }, payload, { new: true });
-        console.log(getOneCategoryFromUser);
-        response.status(200).json({ msg: `>${getOneCategoryFromUser.name}< updated succesfuly` });
+        const updateUserCategory = await UserCat.findOneAndUpdate({ "_id": catId, userID: id }, payload, { new: true });
+        response.status(200).json({ msg: `>${updateUserCategory.name}< updated succesfuly` });
     } catch (error) {
         response.status(500).json({ msg: `Not able to update`, error });
         console.log(error);
