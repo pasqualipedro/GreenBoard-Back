@@ -94,7 +94,7 @@ router.put(`/transaction/update/:transId`, async (request, response) => {
     }; */
     try {
         const updateUserTransaction = await Transaction.findByIdAndUpdate({ "_id": transId, userID: id }, payload, { new: true });
-        response.status(200).json({ msg: `Transaction updated successfuly`, updateUserTransaction})
+        response.status(200).json({ msg: `Transaction updated successfuly`, updateUserTransaction });
     } catch (error) {
         response.status(400).json({ msg: `Error while updating transaction:`, error });
     };

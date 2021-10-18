@@ -1,26 +1,33 @@
 /** Criando um roteador */
-const { Router } =  require(`express`);
+const { Router, request } =  require(`express`);
 const router = Router();
 
 /** importing models */
 const User = require(`../models/User`);
 
 /**REQUESTS */
-/**Create new user */
-
-
-/* router.post(`/auth/signup`, async (request, response) => {
-    const payload = request.body;
-    if(!payload) {
-        return response.status(400).json({ msg: `missing User information for signup` });
-    }
+/**Get logged user information */
+router.get(`/userinfo/get`, async (request, response) => {
+    const { id } = request.user;
     try {
-        const newUser = await User.create(payload);
-        response.status(201).json({ msg: `user created successfuly`, newUser });
+        const userFullInfo = await User.findById(id);
+        response.status(200).json({ msg: `User info is:`, userFullInfo });
     } catch (error) {
-        response.status(500).json({ msg: `Server error:`, error });
-    }
-}); */
+        response.status(400).json({ msg: `Not able to fetch user info`, error });
+    };
+});
+
+/**Update logged user information */
+router.put(`/userinfo/update`, async (request, response) => {
+    const { id } = request.user;
+    const payload = request.body;
+    try {
+        const updatedUserInfo = await User.findByIdAndUpdate({ "_id": id }, payload, { new: true });
+        response.status(200).json({ msg: `"${updatedUserInfo.name}" information updated successfuly:`, updatedUserInfo });
+    } catch (error) {   
+        response.status(400).json({ msg: `Not able to update user info`, error });
+    };
+});
 
 
 module.exports = router;
