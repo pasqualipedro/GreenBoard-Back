@@ -49,7 +49,7 @@ router.post(`/transaction/add`, async (request, response) => {
     };
 });
 
-/**Fetching all categories from one specific user */
+/**Fetching all transactions from one specific user */
 router.get(`/transaction/all`, async (request, response) => {
     const { id } = request.user;
     try {
