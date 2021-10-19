@@ -11,17 +11,18 @@ const UserCat = require(`../models/UserCategories`);
 /**Create new category for one specific user */
 router.post(`/category/add/`, async (request, response) => {
     const { id } = request.user;
-    const { name, description, type, budget, /* inUse */ } = request.body;
+    const { name, description, type, labe, budget, /* inUse */ } = request.body;
     const payload = {
         name: name,
         description: description,
         type: type,
+        label: type,
         budget: budget,
         /* inUse: inUse, */
         userID: id
     };
-    if(payload.name === "" || payload.description === "" ) {
-        return response.status(400).json({ msg: `Missing category name and/or description` });
+    if(payload.name === "" || payload.description === "" || payload.label === "" ) {
+        return response.status(400).json({ msg: `Missing category name and/or description and/or label` });
     };
     if( !(payload.type === "Expenditure" || payload.type === "Income") ) {
         return response.status(400).json({ msg: `Please select your category type as Expenditure or Income` });
