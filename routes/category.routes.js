@@ -11,12 +11,12 @@ const UserCat = require(`../models/UserCategories`);
 /**Create new category for one specific user */
 router.post(`/category/add/`, async (request, response) => {
     const { id } = request.user;
-    const { name, description, type, labe, budget, /* inUse */ } = request.body;
+    const { name, description, type, label, budget, /* inUse */ } = request.body;
     const payload = {
         name: name,
         description: description,
         type: type,
-        label: type,
+        label: label,
         budget: budget,
         /* inUse: inUse, */
         userID: id
@@ -59,7 +59,7 @@ router.delete(`/category/delete/:catId`, async (request, response) => {
     const { catId } = request.params;
     try {
         const deleteUserCategory = await UserCat.findOneAndDelete({ "_id": catId, userID: id });
-        response.status(200).json({ msg: `>${delUserCategory.name}< was deleted successfuly` });
+        response.status(200).json({ msg: `>${deleteUserCategory.name}< was deleted successfuly` });
     } catch (error) {
         response.status(500).json({ msg: `Not able to delete`, error });
     }
