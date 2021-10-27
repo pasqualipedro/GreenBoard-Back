@@ -15,7 +15,6 @@ const transactionSchema = new Schema(
             enum: [`Income`,`Expenditure`]
         },
         description: { type: String, required: true },
-        label: { type: String },
         category_id: { type: Schema.Types.ObjectId, ref: `UserCat` },
         value: { type: Number, required: true, min: [1] },
         frequency:
