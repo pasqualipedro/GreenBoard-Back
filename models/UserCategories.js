@@ -14,7 +14,7 @@ const categoriesUser = new Schema(
             required: true,
             enum: [`Income`,`Expenditure`,`Savings`]
         },
-        categoryName: { type: String },
+        group: { type: String },
         budget: { type: Number, required: true }, /** [ { value: Number, date: Number } ] --->> maybe implement after the MVP is done */ 
         inUse: { type: Boolean, default: true },
         userID: { type: Schema.Types.ObjectId, ref: `User`, required: true }
