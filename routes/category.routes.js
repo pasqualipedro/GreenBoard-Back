@@ -11,14 +11,13 @@ const UserCat = require(`../models/UserCategories`);
 /**Create new category for one specific user */
 router.post(`/category/add/`, async (request, response) => {
     const { id } = request.user;
-    const { item, description, type, group, budget, inUse } = request.body;
+    const { item, description, type, group, budget } = request.body;
     const payload = {
         item: item,
         description: description,
         type: type,
         group: group,
         budget: budget,
-        inUse: inUse,
         userID: id
     };
     if(payload.item === "" || payload.description === "" || payload.group === "" ) {
