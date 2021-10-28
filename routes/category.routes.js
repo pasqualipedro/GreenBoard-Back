@@ -11,7 +11,7 @@ const UserCat = require(`../models/UserCategories`);
 /**Create new category for one specific user */
 router.post(`/category/add/`, async (request, response) => {
     const { id } = request.user;
-    const { item, description, type, categoryName, budget, inUse } = request.body;
+    const { item, description, type, group, budget, inUse } = request.body;
     const payload = {
         item: item,
         description: description,
@@ -32,7 +32,7 @@ router.post(`/category/add/`, async (request, response) => {
     };
     try {
         const newUserCategory = await UserCat.create(payload);
-        response.status(201).json({ msg: `>${newUserCategory.name}< was added to user categories` });
+        response.status(201).json({ msg: `>${newUserCategory.group}< was added to user categories` });
     } catch (error) {
         response.status(500).json({ msg: `Server error:`, error });
         console.log(error);
