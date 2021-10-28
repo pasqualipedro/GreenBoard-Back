@@ -11,27 +11,24 @@ const UserCat = require(`../models/UserCategories`);
 /**Create new category for one specific user */
 router.post(`/category/add/`, async (request, response) => {
     const { id } = request.user;
-    const { name, description, type, label, budget, /* inUse */ } = request.body;
+    const { item, description, type, group, budget, /* inUse */ } = request.body;
     const payload = {
-        name: name,
+        item: item,
         description: description,
         type: type,
-        label: label,
+        group: group,
         budget: budget,
         /* inUse: inUse, */
         userID: id
     };
-    if(payload.name === "" || payload.description === "" || payload.label === "" ) {
-        return response.status(400).json({ msg: `Missing category name and/or description and/or label` });
+    if(payload.item === "" || payload.description === "" || payload.group === "" ) {
+        return response.status(400).json({ msg: `Missing category item name and/or description and/or group` });
     };
-    if( !(payload.type === "Expenditure" || payload.type === "Income") ) {
-        return response.status(400).json({ msg: `Please select your category type as Expenditure or Income` });
+    if( !(payload.type === "Expenditure" || payload.type === "Income" || payload.type === "Savings" ) ) {
+        return response.status(400).json({ msg: `Please select your category type as Expenditure, Income or Savings` });
     };
     if(payload.budget === 0 ) {
         return response.status(400).json({ msg: `Category budget must be greater than 0` });
-    };
-    if( !(payload.type === "Expenditure" || payload.type === "Income") ) {
-        return response.status(400).json({ msg: `Please select category type as Expenditure or Income` });
     };
     try {
         const newUserCategory = await UserCat.create(payload);
