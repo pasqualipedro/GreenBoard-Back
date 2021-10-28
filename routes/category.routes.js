@@ -11,14 +11,14 @@ const UserCat = require(`../models/UserCategories`);
 /**Create new category for one specific user */
 router.post(`/category/add/`, async (request, response) => {
     const { id } = request.user;
-    const { item, description, type, group, budget, /* inUse */ } = request.body;
+    const { item, description, type, categoryName, budget, inUse } = request.body;
     const payload = {
         item: item,
         description: description,
         type: type,
         group: group,
         budget: budget,
-        /* inUse: inUse, */
+        inUse: inUse,
         userID: id
     };
     if(payload.item === "" || payload.description === "" || payload.group === "" ) {
@@ -27,7 +27,7 @@ router.post(`/category/add/`, async (request, response) => {
     if( !(payload.type === "Expenditure" || payload.type === "Income" || payload.type === "Savings" ) ) {
         return response.status(400).json({ msg: `Please select your category type as Expenditure, Income or Savings` });
     };
-    if(payload.budget === 0 ) {
+    if(payload.budget === 0 || payload.budget < 0 ) {
         return response.status(400).json({ msg: `Category budget must be greater than 0` });
     };
     try {
@@ -71,14 +71,11 @@ router.put(`/category/update/:catId`, async (request, response) => {
     if(payload.name === "" || payload.description === "" ) {
         return response.status(400).json({ msg: `Missing category name and/or description` });
     };
-    if( !(payload.type === "Expenditure" || payload.type === "Income") ) {
-        return response.status(400).json({ msg: `Please select your category type as Expenditure or Income` });
+    if( !(payload.type === "Expenditure" || payload.type === "Income" || payload.type === "Savings" ) ) {
+        return response.status(400).json({ msg: `Please select your category type as Expenditure, Income or Savings` });
     };
-    if(payload.budget === 0 ) {
+    if(payload.budget === 0 || payload.budget < 0 ) {
         return response.status(400).json({ msg: `Category budget must be greater than 0` });
-    };
-    if( !(payload.type === "Expenditure" || payload.type === "Income") ) {
-        return response.status(400).json({ msg: `Please select category type as Expenditure or Income` });
     };
     try {
         const updateUserCategory = await UserCat.findOneAndUpdate({ "_id": catId, userID: id }, payload, { new: true });
