@@ -8,13 +8,14 @@ const transactionSchema = new Schema(
         /**ID comes automatically */
         startDate: { type: Date, required: true},
         endDate: { type: Date},
+        description: { type: String, required: true },
         type:
         {
             type: String,
             required: true,
-            enum: [`Income`,`Expenditure`]
+            enum: [`Income`,`Expenditure`,`Savings`]
         },
-        description: { type: String, required: true },
+        group: { type: String, required: true },
         category_id: { type: Schema.Types.ObjectId, ref: `UserCat` },
         value: { type: Number, required: true, min: [1] },
         frequency:
