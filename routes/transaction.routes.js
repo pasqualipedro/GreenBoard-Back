@@ -13,7 +13,7 @@ const UserCat = require(`../models/UserCategories`);
 /**Create new transaction for one specific user */
 router.post(`/transaction/add`, async (request, response) => {
     const { id } = request.user;
-    const { startDate, endDate, description, type, group, value, frequency } = request.body;
+    const { startDate, endDate, description, type, group, item, value, frequency } = request.body;
     const allCategoriesFromUser = await UserCat.find({ userID: id });
     const payload = {
         startDate: startDate,
@@ -21,6 +21,7 @@ router.post(`/transaction/add`, async (request, response) => {
         description: description,
         type: type,
         group: group,
+        item: item,
         value: value,
         frequency: frequency,
         userID: id
@@ -34,8 +35,8 @@ router.post(`/transaction/add`, async (request, response) => {
     if( payload.description === "") {
         return response.status(400).json({ msg: `Please add some description to your transaction`});
     };
-    if( payload.group === "") {
-        return response.status(400).json({ msg: `Please attribute some category name to your transaction`});
+    if( payload.group === "" || payload.item === "" ) {
+        return response.status(400).json({ msg: `Please attribute some category name and item to your transaction`});
     };
     if( !allCategoriesFromUser.some(element => element.userID == id) ) {
         return response.status(400).json({ msg: `The selected category does not belong to this user`});
