@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+# Greenbook
+## API for the project Greenbook 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Greenbook is a api, based on express, bcrypt, mongoose and jsonwebtoken, to help the user to manage their financial life 
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Create categories to your expenditures
+- Register your transactions
+- Consolidate all the information into a dashboard
 
-### `npm start`
+## Tech
+Greenbook Api uses:
+- node.js
+- express
+- jsonwebtoken
+- bcrypt
+- mongoose
+- nodemon
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Installation
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+GreenBook requires [Node.js](https://nodejs.org/) v10+ to run.
 
-### `npm test`
+In the source folder add an .env file with this variables:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+MONGO_URI - for your atlas cluster or local mongodb TOKEN_SECRET - for your jwt secret EXPIRATION_AUTH_TOKEN - for setting your expiration time for jwt
 
-### `npm run build`
+Install the dependencies and devDependencies and start the server.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```sh
+cd GreenBoard-Back
+npm i
+node app
+```
+You can test http://localhost:5000/.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+You can test with: https://fupprojects.herokuapp.com/api
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The common endpoints are the following:
+All end point except /login and /signup need to be access with token on Authorization header
 
-### `npm run eject`
+METHOD       | ENDPOINT                        | PAYLOAD                                                                                                                                                                                                                                 | RESPONSE (add status code)                                               | Action                                                                                                  |
+|--------------|---------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| POST         | /auth/login                     | { email: String, password: String }                                                                                                                                                                                                     | Auth token on Headers                                                    | Return JWT to private routes                                                                            |
+| POST         | /auth/signup                    | { name: String, lastName: String, age: Number, email: String, pass:   String, passConfirmation: String }                                                                                                                                | { msg: New user created, newUser }                                       | Criacao de novo usuario + adicao de categorias default                                                  |
+| POST         | /category/add/                  | { name: String, description: String, budget: Number,  inUse:Boolean, userID: userID }                                                                                                                                                   | { msg: `>${newUserCategory.name}< was added to user categories` }        | Adicionar novas categorias  à lista   de um usuario especifico                                          |
+| DELETE       | /category/delete/:catId         | { catId }                                                                                                                                                                                                                               | { msg: `>${delUserCategory.name}< was deleted successfuly` }             | Deletar categoria especifica da lista de categorias de um usuario   especifico                          |
+| GET          | /category/all/:userId           | EMPTY                                                                                                                                                                                                                                   | { msg: `All categories from >${userId}< are:`,   allCategoriesFromUser } | Busca todas as categorias de um unico usuario                                                           |
+| PUT          | /category/update/:userId/:catId | {     name: String,       description: String    budget:   Number     inUse: true }                                                                                                                                                     | { msg: `>${getOneCategoryFromUser.name}< updated succesfuly` }           | Fazer update de categorias especificas jà pertencentes à lista de   categorias de um usuario especifico |
+| POST         | /transaction/add                | {         startDate: Date,         endDate: Date,         type: String,         description: String,         label: label,         category_id: category_id,         value: Number,         frequency: String,         userID: id     } | { msg: `New transaction created successfuly`, addNewTransaction}         | Criar/Adicionar nova transacao ao Dash de um usuario especifico                                         |
+| GET          | /transaction/all                | -                                                                                                                                                                                                                                       | { msg: `All transactions are:`, allTransactionsFromUser }                | Buscar todas as transacoes daquele usuario                                                              |
+| DELETE       | /transaction/delete/:transId    | const { transId } = request.params                                                                                                                                                                                                      |                                                                          |                                                                                                         |
+| PUT          | /transaction/update/:transId    | const { transId } = request.params                                                                                                                                                                                                      |                                                                          |                                                                                                         |
+| GET          | /userinfo/get                   | -                                                                                                                                                                                                                                       | { msg: `User info is:`, userFullInfo }                                   | Buscar informacoes do usuario logado                                                                    |
+| PUT          | /userinfo/update                | const { id } = request.user                                                                                                                                                                                                             |                                                                          |                                                                                                         |
+| PUT (Update) | /transaction/update/:transId    | const { transId } = request.params                                                                                                                                                                                                      |                                                                          |                                                                                                         |
+| USER ROUTES  |                                 |                                                                                                                                                                                                                                         |                                                                          |                                                                                                         |
+| GET (fetch)  | /userinfo/get                   | -                                                                                                                                                                                                                                       | { msg: `User info is:`, userFullInfo }                                   | Buscar informacoes do usuario logado                                                                    |
+| PUT (Update) | /userinfo/update                | const { id } = request.user                                                                                                                                                                                                             |                                                                          |                                                                                                         |
+| PUT (Update) | /userinfo/update                | const { id } = request.user                                                                                                                                                                                                             |                                                                          |                                                                                                         |
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
